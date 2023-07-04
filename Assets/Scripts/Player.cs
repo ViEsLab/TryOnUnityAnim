@@ -15,6 +15,8 @@ public class Player : MonoBehaviour {
     private Vector3 matchTarget = Vector3.zero;
 
     public GameObject unityLog = null;
+    public Transform rightHand;
+    public Transform leftHand;
 
     // Start is called before the first frame update
     void Start() {
@@ -67,5 +69,21 @@ public class Player : MonoBehaviour {
     void CarryWood() {
         unityLog.SetActive(true);
         anim.SetBool(isHoldLogId, true);
+    }
+
+    private void OnAnimatorIK(int layerIndex) {
+        if (layerIndex == 1) {
+            int weight = anim.GetBool(isHoldLogId) ? 1 : 0;
+
+            anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHand.position);
+            anim.SetIKRotation(AvatarIKGoal.LeftHand, leftHand.rotation);
+            anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, weight);
+            anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, weight);
+
+            anim.SetIKPosition(AvatarIKGoal.RightHand, rightHand.position);
+            anim.SetIKRotation(AvatarIKGoal.RightHand, rightHand.rotation);
+            anim.SetIKPositionWeight(AvatarIKGoal.RightHand, weight);
+            anim.SetIKRotationWeight(AvatarIKGoal.RightHand, weight);
+        }
     }
 }
