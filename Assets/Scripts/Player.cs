@@ -6,6 +6,8 @@ public class Player : MonoBehaviour {
     private Animator anim;
 
     private int speedId = Animator.StringToHash("Speed");
+    private int isSpeedUpId = Animator.StringToHash("IsSpeedUp");
+    private int horizontalId = Animator.StringToHash("Horizontal");
 
     // Start is called before the first frame update
     void Start() {
@@ -15,5 +17,13 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         anim.SetFloat(speedId, Input.GetAxis("Vertical"));
+        anim.SetFloat(horizontalId, Input.GetAxis("Horizontal"));
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            anim.SetBool(isSpeedUpId, true);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift)) {
+            anim.SetBool(isSpeedUpId, false);
+        }
+
     }
 }
