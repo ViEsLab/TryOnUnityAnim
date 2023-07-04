@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,14 @@ public class Player : MonoBehaviour {
     private int speedZId = Animator.StringToHash("SpeedZ");
     private int vaultId = Animator.StringToHash("Vault");
     private int colliderId = Animator.StringToHash("Collider");
+    private int isHoldLogId = Animator.StringToHash("IsHoldLog");
     private Vector3 matchTarget = Vector3.zero;
+
+    public GameObject unityLog = null;
 
     // Start is called before the first frame update
     void Start() {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
         characterController = GetComponent<CharacterController>();
     }
 
@@ -51,5 +55,17 @@ public class Player : MonoBehaviour {
         }
 
         characterController.enabled = anim.GetFloat(colliderId) < 0.05f;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.tag == "Log") {
+            Destroy(other.gameObject);
+            CarryWood();
+        }
+    }
+
+    void CarryWood() {
+        unityLog.SetActive(true);
+        anim.SetBool(isHoldLogId, true);
     }
 }
