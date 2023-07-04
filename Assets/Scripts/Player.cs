@@ -16,14 +16,14 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        anim.SetFloat(speedId, Input.GetAxis("Vertical"));
-        anim.SetFloat(horizontalId, Input.GetAxis("Horizontal"));
-        if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            anim.SetBool(isSpeedUpId, true);
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift)) {
-            anim.SetBool(isSpeedUpId, false);
-        }
+        anim.SetFloat(speedId, Input.GetAxis("Vertical") * 4.1f);
 
+        // anim.SetFloat(horizontalId, Input.GetAxis("Horizontal"));
+        // if (Input.GetKeyDown(KeyCode.LeftShift)) {
+        //     anim.SetBool(isSpeedUpId, true);
+        // }
+        // if (Input.GetKeyUp(KeyCode.LeftShift)) {
+        //     anim.SetBool(isSpeedUpId, false);
+        // }
     }
 }
