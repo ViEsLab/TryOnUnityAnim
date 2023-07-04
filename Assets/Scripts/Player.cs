@@ -5,12 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     private Animator anim;
 
-    private int speedId = Animator.StringToHash("Speed");
-    private int isSpeedUpId = Animator.StringToHash("IsSpeedUp");
-    private int horizontalId = Animator.StringToHash("Horizontal");
-
     private int speedRotateId = Animator.StringToHash("SpeedRotate");
     private int speedZId = Animator.StringToHash("SpeedZ");
+
+    private int vaultId = Animator.StringToHash("Vault");
 
     // Start is called before the first frame update
     void Start() {
@@ -22,13 +20,16 @@ public class Player : MonoBehaviour {
         anim.SetFloat(speedZId, Input.GetAxis("Vertical") * 4.1f);
         anim.SetFloat(speedRotateId, Input.GetAxis("Horizontal") * 126);
 
-        // anim.SetFloat(speedId, Input.GetAxis("Vertical") * 4.1f);
-        // anim.SetFloat(horizontalId, Input.GetAxis("Horizontal"));
-        // if (Input.GetKeyDown(KeyCode.LeftShift)) {
-        //     anim.SetBool(isSpeedUpId, true);
-        // }
-        // if (Input.GetKeyUp(KeyCode.LeftShift)) {
-        //     anim.SetBool(isSpeedUpId, false);
-        // }
+        bool isVault = false;
+        if (anim.GetFloat(speedZId) > 3) {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position + Vector3.up * 0.3f, transform.forward, out hit, 2)) {
+                if (hit.collider.tag == "Obstacle") {
+                    isVault = true;
+                }
+            }
+        }
+
+        anim.SetBool(vaultId, isVault);
     }
 }
